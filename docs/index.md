@@ -1,98 +1,138 @@
-# SimpMusic.Lyrics.Client Documentation
+# IO.Swagger.Api.LyricsApi
 
-A .NET client library for the SimpMusic Lyrics API. Provides easy access to lyrics and translations for songs.
+All URIs are relative to *https://api-lyrics.simpmusic.org*
 
-## API Documentation
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**CreateLyric**](LyricsApi.md#createlyric) | **POST** /v1 | Create New Lyric
+[**GetLyricsByVideoId**](LyricsApi.md#getlyricsbyvideoid) | **GET** /v1/{videoId} | Get Lyrics by Video ID
 
-### API Classes
+<a name="createlyric"></a>
+# **CreateLyric**
+> CreateLyricResponse CreateLyric (CreateLyricRequest body)
 
-- **[LyricsApi](LyricsApi.md)** - Get lyrics by YouTube video ID and create new lyrics
-- **[SearchApi](SearchApi.md)** - Search lyrics by title, artist, or query
-- **[TranslationsApi](TranslationsApi.md)** - Get and create translated lyrics
-- **[VotingApi](VotingApi.md)** - Vote for lyrics and translations
+Create New Lyric
 
-### Models
+Creates a new lyric entry with the provided lyric data. Requires HMAC authentication.
 
-- **[LyricsResponse](LyricsResponse.md)** - Response containing lyrics data
-- **[LyricsListResponse](LyricsListResponse.md)** - Response containing a list of lyrics
-- **[TranslatedLyric](TranslatedLyric.md)** - Translated lyric data
-- **[TranslatedLyricsListResponse](TranslatedLyricsListResponse.md)** - Response containing translated lyrics
-- **[CreateLyricRequest](CreateLyricRequest.md)** - Request model for creating lyrics
-- **[CreateLyricResponse](CreateLyricResponse.md)** - Response model for lyric creation
-- **[CreateTranslatedLyricRequest](CreateTranslatedLyricRequest.md)** - Request model for creating translations
-- **[CreateTranslatedLyricResponse](CreateTranslatedLyricResponse.md)** - Response model for translation creation
-- **[VoteRequest](VoteRequest.md)** - Request model for voting
-- **[SuccessResponse](SuccessResponse.md)** - Generic success response
-- **[ErrorResponse](ErrorResponse.md)** - Error response model
-- **[ErrorResponseError](ErrorResponseError.md)** - Error details
-
-## Quick Start
-
+### Example
 ```csharp
-using SimpMusic.Lyrics.Client.Api;
-using SimpMusic.Lyrics.Client.Model;
+using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
 
-// Create API instance
-var api = new LyricsApi();
-
-// Get lyrics by video ID
-var lyrics = await api.GetLyricsByVideoIdAsync("ZFIWU2jx7yM");
-
-if (lyrics != null)
+namespace Example
 {
-    Console.WriteLine($"Song: {lyrics.SongTitle}");
-    Console.WriteLine($"Artist: {lyrics.ArtistName}");
-    Console.WriteLine($"Lyrics:\n{lyrics.PlainLyric}");
+    public class CreateLyricExample
+    {
+        public void main()
+        {
+            // Configure API key authorization: hmacAuth
+            Configuration.Default.AddApiKey("X-HMAC", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("X-HMAC", "Bearer");
+
+            var apiInstance = new LyricsApi();
+            var body = new CreateLyricRequest(); // CreateLyricRequest | 
+
+            try
+            {
+                // Create New Lyric
+                CreateLyricResponse result = apiInstance.CreateLyric(body);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling LyricsApi.CreateLyric: " + e.Message );
+            }
+        }
+    }
 }
 ```
 
-## Installation
+### Parameters
 
-Install via NuGet:
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**CreateLyricRequest**](CreateLyricRequest.md)|  | 
 
-```bash
-dotnet add package SimpMusic.Lyrics.Client
-```
+### Return type
 
-Or via Package Manager:
+[**CreateLyricResponse**](CreateLyricResponse.md)
 
-```powershell
-Install-Package SimpMusic.Lyrics.Client
-```
+### Authorization
 
-## Rate Limiting
+[hmacAuth](../README.md#hmacAuth)
 
-The API enforces rate limiting:
+### HTTP request headers
 
-- **30 requests per minute** per IP address
-- Rate limit headers are included in all responses:
-  - `X-RateLimit-Limit`: Maximum requests allowed
-  - `X-RateLimit-Remaining`: Remaining requests in current window
-  - `X-RateLimit-Reset`: Unix timestamp when limit resets
-- When exceeded, returns HTTP 429 with `Retry-After` header
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
-## HMAC Authentication
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+<a name="getlyricsbyvideoid"></a>
+# **GetLyricsByVideoId**
+> LyricsResponse GetLyricsByVideoId (string videoId, int? limit = null, int? offset = null)
 
-For POST/PUT/DELETE operations, HMAC authentication is required:
+Get Lyrics by Video ID
 
+Fetches lyrics associated with a specific video ID. Optionally supports pagination with limit and offset.
+
+### Example
 ```csharp
-var config = new Configuration();
-config.ApiKey.Add("X-HMAC", "your-hmac-token");
-config.ApiKey.Add("X-Timestamp", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString());
+using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
 
-var api = new LyricsApi(config);
+namespace Example
+{
+    public class GetLyricsByVideoIdExample
+    {
+        public void main()
+        {
+            var apiInstance = new LyricsApi();
+            var videoId = videoId_example;  // string | YouTube video ID
+            var limit = 56;  // int? | Maximum number of results to return (optional) 
+            var offset = 56;  // int? | Number of results to skip (optional) 
+
+            try
+            {
+                // Get Lyrics by Video ID
+                LyricsResponse result = apiInstance.GetLyricsByVideoId(videoId, limit, offset);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling LyricsApi.GetLyricsByVideoId: " + e.Message );
+            }
+        }
+    }
+}
 ```
 
-## OpenAPI Specification
+### Parameters
 
-The complete OpenAPI specification is available: [openapi.json](openapi.json)
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **videoId** | **string**| YouTube video ID | 
+ **limit** | **int?**| Maximum number of results to return | [optional] 
+ **offset** | **int?**| Number of results to skip | [optional] 
 
-## Links
+### Return type
 
-- [GitHub Repository](https://github.com/Bluscream/SimpMusic.Lyrics.Client)
-- [NuGet Package](https://www.nuget.org/packages/SimpMusic.Lyrics.Client)
-- [SimpMusic Lyrics API](https://lyrics.simpmusic.org/api)
+[**LyricsResponse**](LyricsResponse.md)
 
-## License
+### Authorization
 
-This library is provided as-is. The SimpMusic Lyrics API is licensed under GPL-3.0.
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
