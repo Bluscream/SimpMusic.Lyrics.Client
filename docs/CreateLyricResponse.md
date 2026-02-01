@@ -1,4 +1,4 @@
-# IO.Swagger.Model.CreateLyricResponse
+# SimpMusic.Lyrics.Client.Model.CreateLyricResponse
 ## Properties
 
 Name | Type | Description | Notes

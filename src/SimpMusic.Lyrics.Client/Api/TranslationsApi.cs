@@ -304,7 +304,7 @@ namespace SimpMusic.Lyrics.Client.Api
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
+            Object? localVarPostBody = null;
 
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
@@ -348,7 +348,7 @@ namespace SimpMusic.Lyrics.Client.Api
             }
 
             return new ApiResponse<CreateTranslatedLyricResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
                 (CreateTranslatedLyricResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(CreateTranslatedLyricResponse)));
         }
 
@@ -383,7 +383,7 @@ namespace SimpMusic.Lyrics.Client.Api
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
+            Object? localVarPostBody = null;
 
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
@@ -427,7 +427,7 @@ namespace SimpMusic.Lyrics.Client.Api
             }
 
             return new ApiResponse<CreateTranslatedLyricResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
                 (CreateTranslatedLyricResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(CreateTranslatedLyricResponse)));
         }
 
@@ -465,7 +465,7 @@ namespace SimpMusic.Lyrics.Client.Api
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
+            Object? localVarPostBody = null;
 
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
@@ -498,7 +498,7 @@ namespace SimpMusic.Lyrics.Client.Api
             }
 
             return new ApiResponse<TranslatedLyricsListResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
                 (TranslatedLyricsListResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(TranslatedLyricsListResponse)));
         }
 
@@ -537,7 +537,7 @@ namespace SimpMusic.Lyrics.Client.Api
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
+            Object? localVarPostBody = null;
 
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
@@ -558,7 +558,7 @@ namespace SimpMusic.Lyrics.Client.Api
 
             // make the HTTP request
             RestResponse localVarResponse = (RestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
-                Method.Get, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                Method.Get, localVarQueryParams, localVarPostBody!, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
@@ -570,7 +570,7 @@ namespace SimpMusic.Lyrics.Client.Api
             }
 
             return new ApiResponse<TranslatedLyricsListResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
                 (TranslatedLyricsListResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(TranslatedLyricsListResponse)));
         }
 
@@ -609,7 +609,7 @@ namespace SimpMusic.Lyrics.Client.Api
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
+            Object? localVarPostBody = null;
 
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
@@ -641,7 +641,7 @@ namespace SimpMusic.Lyrics.Client.Api
             }
 
             return new ApiResponse<TranslatedLyricsListResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
                 (TranslatedLyricsListResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(TranslatedLyricsListResponse)));
         }
 
@@ -681,7 +681,7 @@ namespace SimpMusic.Lyrics.Client.Api
             var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
             var localVarFormParams = new Dictionary<String, String>();
             var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
+            Object? localVarPostBody = null;
 
             // to determine the Content-Type header
             String[] localVarHttpContentTypes = new String[] {
@@ -701,7 +701,7 @@ namespace SimpMusic.Lyrics.Client.Api
 
             // make the HTTP request
             RestResponse localVarResponse = (RestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
-                Method.Get, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                Method.Get, localVarQueryParams, localVarPostBody!, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
@@ -713,7 +713,7 @@ namespace SimpMusic.Lyrics.Client.Api
             }
 
             return new ApiResponse<TranslatedLyricsListResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
                 (TranslatedLyricsListResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(TranslatedLyricsListResponse)));
         }
 

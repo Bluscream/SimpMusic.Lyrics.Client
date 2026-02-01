@@ -36,13 +36,32 @@ using SimpMusic.Lyrics.Client.Model;
 var api = new LyricsApi();
 
 // Get lyrics by video ID
-var lyrics = await api.GetLyricsByVideoIdAsync("ZFIWU2jx7yM");
+// Note: The API returns lyrics in a wrapper format with a data array
+// The client automatically extracts the first item for GetLyricsByVideoIdAsync
+var lyrics = await api.GetLyricsByVideoIdAsync("Y9SmNz2RofI");
 
-if (lyrics != null)
+if (lyrics != null && !string.IsNullOrWhiteSpace(lyrics.PlainLyric))
 {
     Console.WriteLine($"Song: {lyrics.SongTitle}");
     Console.WriteLine($"Artist: {lyrics.ArtistName}");
     Console.WriteLine($"Lyrics:\n{lyrics.PlainLyric}");
+}
+else
+{
+    Console.WriteLine("No lyrics found for this video.");
+}
+
+// Search for lyrics
+var searchApi = new SearchApi();
+var searchResults = await searchApi.SearchLyricsAsync("demons", limit: 5);
+
+if (searchResults != null && searchResults.Data != null && searchResults.Data.Count > 0)
+{
+    Console.WriteLine($"Found {searchResults.Data.Count} results:");
+    foreach (var result in searchResults.Data)
+    {
+        Console.WriteLine($"- {result.SongTitle} by {result.ArtistName}");
+    }
 }
 ```
 
@@ -61,24 +80,46 @@ The API enforces rate limiting:
 ### Lyrics
 
 - `GetLyricsByVideoIdAsync(videoId, limit?, offset?)` - Get lyrics by YouTube video ID
+  - **Note:** The API returns lyrics in a wrapper format `{"type": "success", "data": [{...}], "success": true}`. The client automatically extracts the first item from the `data` array.
 - `CreateLyricAsync(body)` - Create new lyric (requires HMAC auth)
 
 ### Translations
 
 - `GetTranslatedLyricsByVideoIdAsync(videoId)` - Get all translations for a video
+  - Returns `TranslatedLyricsListResponse` with `Data` array containing all translations
 - `GetTranslatedLyricsByVideoIdAndLanguageAsync(videoId, language)` - Get translation in specific language
+  - Returns `TranslatedLyricsListResponse` with `Data` array
 - `CreateTranslatedLyricAsync(body)` - Create new translation (requires HMAC auth)
 
 ### Search
 
 - `SearchLyricsAsync(query, limit?, offset?)` - Search lyrics by query
+  - Returns `LyricsListResponse` with `Data` array containing search results
 - `SearchLyricsByTitleAsync(title, limit?, offset?)` - Search by song title
+  - Returns `LyricsListResponse` with `Data` array
 - `SearchLyricsByArtistAsync(artist, limit?, offset?)` - Search by artist name
+  - Returns `LyricsListResponse` with `Data` array
 
 ### Voting
 
 - `VoteForLyricAsync(body)` - Vote for a lyric (requires HMAC auth)
 - `VoteForTranslatedLyricAsync(body)` - Vote for a translation (requires HMAC auth)
+
+## API Response Format
+
+All API endpoints return responses in a wrapper format:
+
+```json
+{
+  "type": "success",
+  "data": [...],
+  "success": true
+}
+```
+
+- **GetLyricsByVideoIdAsync**: Returns a single `LyricsResponse` (client extracts first item from `data` array)
+- **Search endpoints**: Return `LyricsListResponse` with `Data` array containing multiple results
+- **Translation endpoints**: Return `TranslatedLyricsListResponse` with `Data` array containing translations
 
 ## HMAC Authentication
 

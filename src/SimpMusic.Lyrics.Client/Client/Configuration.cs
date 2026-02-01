@@ -130,7 +130,7 @@ namespace SimpMusic.Lyrics.Client
             IDictionary<string, string> defaultHeader,
             IDictionary<string, string> apiKey,
             IDictionary<string, string> apiKeyPrefix,
-            string basePath = "https://api-lyrics.simpmusic.org") : this()
+            string basePath = "https://lyrics.simpmusic.org/api") : this()
         {
             if (string.IsNullOrWhiteSpace(basePath))
                 throw new ArgumentException("The provided basePath is invalid.", "basePath");
@@ -233,7 +233,8 @@ namespace SimpMusic.Lyrics.Client
                 // pass-through to ApiClient if it's set.
                 if (_apiClient != null) {
                     _apiClient.RestClient = new RestClient(new RestClientOptions {
-                    BaseUrl = new Uri(_basePath)
+                    BaseUrl = new Uri(_basePath),
+                    RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true
                     });
 
                 }
@@ -269,7 +270,8 @@ namespace SimpMusic.Lyrics.Client
                 if (_apiClient != null)
             {
                 ApiClient.RestClient = new RestClient(new RestClientOptions{
-                Timeout = TimeSpan.FromMilliseconds(_timeout)
+                Timeout = TimeSpan.FromMilliseconds(_timeout),
+                RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true
                 });
                 };
             }

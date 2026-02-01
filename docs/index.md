@@ -1,6 +1,17 @@
-# IO.Swagger.Api.LyricsApi
+# SimpMusic.Lyrics.Client.Api.LyricsApi
 
 All URIs are relative to *https://api-lyrics.simpmusic.org*
+
+**Note:** All API endpoints return responses in a wrapper format:
+```json
+{
+  "type": "success",
+  "data": [...],
+  "success": true
+}
+```
+
+The `type` field is ignored during deserialization. The client automatically handles the wrapper format.
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -80,13 +91,15 @@ Get Lyrics by Video ID
 
 Fetches lyrics associated with a specific video ID. Optionally supports pagination with limit and offset.
 
+**Note:** The API returns lyrics in a wrapper format `{"type": "success", "data": [{...}], "success": true}`. The client automatically extracts the first item from the `data` array and returns it as a `LyricsResponse`.
+
 ### Example
 ```csharp
 using System;
 using System.Diagnostics;
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
+using SimpMusic.Lyrics.Client.Api;
+using SimpMusic.Lyrics.Client.Client;
+using SimpMusic.Lyrics.Client.Model;
 
 namespace Example
 {
@@ -95,15 +108,27 @@ namespace Example
         public void main()
         {
             var apiInstance = new LyricsApi();
-            var videoId = videoId_example;  // string | YouTube video ID
+            var videoId = "Y9SmNz2RofI";  // string | YouTube video ID
             var limit = 56;  // int? | Maximum number of results to return (optional) 
             var offset = 56;  // int? | Number of results to skip (optional) 
 
             try
             {
                 // Get Lyrics by Video ID
-                LyricsResponse result = apiInstance.GetLyricsByVideoId(videoId, limit, offset);
-                Debug.WriteLine(result);
+                // The API returns: {"type": "success", "data": [{...}], "success": true}
+                // The client extracts the first item from the data array
+                LyricsResponse result = await apiInstance.GetLyricsByVideoIdAsync(videoId, limit, offset);
+                
+                if (result != null && !string.IsNullOrWhiteSpace(result.PlainLyric))
+                {
+                    Debug.WriteLine($"Song: {result.SongTitle}");
+                    Debug.WriteLine($"Artist: {result.ArtistName}");
+                    Debug.WriteLine($"Lyrics: {result.PlainLyric}");
+                }
+                else
+                {
+                    Debug.WriteLine("No lyrics found for this video.");
+                }
             }
             catch (Exception e)
             {
@@ -125,6 +150,28 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**LyricsResponse**](LyricsResponse.md)
+
+**API Response Format:**
+The actual API returns:
+```json
+{
+  "type": "success",
+  "data": [
+    {
+      "id": "...",
+      "videoId": "...",
+      "songTitle": "...",
+      "artistName": "...",
+      "plainLyric": "...",
+      "syncedLyrics": "...",
+      ...
+    }
+  ],
+  "success": true
+}
+```
+
+The client automatically extracts the first item from the `data` array.
 
 ### Authorization
 

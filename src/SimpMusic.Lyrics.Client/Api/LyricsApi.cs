@@ -302,7 +302,7 @@ namespace SimpMusic.Lyrics.Client.Api
             }
 
             return new ApiResponse<CreateLyricResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
                 (CreateLyricResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(CreateLyricResponse)));
         }
 
@@ -381,7 +381,7 @@ namespace SimpMusic.Lyrics.Client.Api
             }
 
             return new ApiResponse<CreateLyricResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
                 (CreateLyricResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(CreateLyricResponse)));
         }
 
@@ -452,7 +452,7 @@ namespace SimpMusic.Lyrics.Client.Api
             }
 
             return new ApiResponse<LyricsResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
                 (LyricsResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(LyricsResponse)));
         }
 
@@ -523,9 +523,65 @@ namespace SimpMusic.Lyrics.Client.Api
                 if (exception != null) throw exception;
             }
 
+            // The API actually returns: {"type": "success", "data": [{...}], "success": true}
+            // We need to deserialize as LyricsListResponse and extract the first item from data array
+            LyricsResponse lyricsResponse = null;
+            
+            try
+            {
+                // Try deserializing as LyricsListResponse (has data array and success field)
+                var listResponse = (LyricsListResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(LyricsListResponse));
+                if (listResponse != null && listResponse.Data != null && listResponse.Data.Count > 0)
+                {
+                    // Take the first item from the data array
+                    lyricsResponse = listResponse.Data[0];
+                }
+            }
+            catch (Exception listEx)
+            {
+                System.Diagnostics.Debug.WriteLine($"[LyricsApi-GetLyricsByVideoId] Failed to deserialize as LyricsListResponse: {listEx.Message}");
+                
+                // If that fails, try direct deserialization (fallback)
+                try
+                {
+                    lyricsResponse = (LyricsResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(LyricsResponse));
+                    System.Diagnostics.Debug.WriteLine($"[LyricsApi-GetLyricsByVideoId] Successfully deserialized as direct LyricsResponse");
+                }
+                catch (Exception directEx)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[LyricsApi-GetLyricsByVideoId] Failed to deserialize as direct LyricsResponse: {directEx.Message}");
+                    // Re-throw the original list deserialization error
+                    throw listEx;
+                }
+            }
+            
+            // If still null or empty, try CreateLyricResponse wrapper as fallback
+            if (lyricsResponse == null || (string.IsNullOrWhiteSpace(lyricsResponse.PlainLyric) && 
+                string.IsNullOrWhiteSpace(lyricsResponse.SyncedLyrics) && string.IsNullOrWhiteSpace(lyricsResponse.RichSyncLyrics) &&
+                string.IsNullOrWhiteSpace(lyricsResponse.SongTitle) && string.IsNullOrWhiteSpace(lyricsResponse.ArtistName)))
+            {
+                try
+                {
+                    var wrapperType = typeof(CreateLyricResponse);
+                    var wrapper = this.Configuration.ApiClient.Deserialize(localVarResponse, wrapperType);
+                    if (wrapper != null)
+                    {
+                        var createResponse = wrapper as Model.CreateLyricResponse;
+                        if (createResponse?.Data != null)
+                        {
+                            lyricsResponse = createResponse.Data;
+                        }
+                    }
+                }
+                catch (Exception wrapperEx)
+                {
+                    // Ignore wrapper deserialization errors
+                }
+            }
+
             return new ApiResponse<LyricsResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (LyricsResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(LyricsResponse)));
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
+                lyricsResponse);
         }
 
     }

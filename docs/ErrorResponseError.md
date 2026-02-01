@@ -1,4 +1,4 @@
-# IO.Swagger.Model.ErrorResponseError
+# SimpMusic.Lyrics.Client.Model.ErrorResponseError
 ## Properties
 
 Name | Type | Description | Notes

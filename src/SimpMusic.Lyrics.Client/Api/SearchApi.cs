@@ -353,7 +353,7 @@ namespace SimpMusic.Lyrics.Client.Api
             }
 
             return new ApiResponse<LyricsListResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
                 (LyricsListResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(LyricsListResponse)));
         }
 
@@ -413,7 +413,7 @@ namespace SimpMusic.Lyrics.Client.Api
 
             // make the HTTP request
             RestResponse localVarResponse = (RestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
-                Method.Get, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                Method.Get, localVarQueryParams, localVarPostBody!, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
@@ -425,7 +425,7 @@ namespace SimpMusic.Lyrics.Client.Api
             }
 
             return new ApiResponse<LyricsListResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
                 (LyricsListResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(LyricsListResponse)));
         }
 
@@ -496,7 +496,7 @@ namespace SimpMusic.Lyrics.Client.Api
             }
 
             return new ApiResponse<LyricsListResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
                 (LyricsListResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(LyricsListResponse)));
         }
 
@@ -556,7 +556,7 @@ namespace SimpMusic.Lyrics.Client.Api
 
             // make the HTTP request
             RestResponse localVarResponse = (RestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
-                Method.Get, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                Method.Get, localVarQueryParams, localVarPostBody!, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
@@ -568,7 +568,7 @@ namespace SimpMusic.Lyrics.Client.Api
             }
 
             return new ApiResponse<LyricsListResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
                 (LyricsListResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(LyricsListResponse)));
         }
 
@@ -639,7 +639,7 @@ namespace SimpMusic.Lyrics.Client.Api
             }
 
             return new ApiResponse<LyricsListResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
                 (LyricsListResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(LyricsListResponse)));
         }
 
@@ -699,7 +699,7 @@ namespace SimpMusic.Lyrics.Client.Api
 
             // make the HTTP request
             RestResponse localVarResponse = (RestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
-                Method.Get, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                Method.Get, localVarQueryParams, localVarPostBody!, localVarHeaderParams, localVarFormParams, localVarFileParams,
                 localVarPathParams, localVarHttpContentType);
 
             int localVarStatusCode = (int) localVarResponse.StatusCode;
@@ -711,7 +711,7 @@ namespace SimpMusic.Lyrics.Client.Api
             }
 
             return new ApiResponse<LyricsListResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
                 (LyricsListResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(LyricsListResponse)));
         }
 

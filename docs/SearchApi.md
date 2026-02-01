@@ -1,6 +1,8 @@
-# IO.Swagger.Api.SearchApi
+# SimpMusic.Lyrics.Client.Api.SearchApi
 
 All URIs are relative to *https://api-lyrics.simpmusic.org*
+
+**Note:** All search endpoints return responses in a wrapper format with a `data` array containing search results.
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -61,6 +63,28 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**LyricsListResponse**](LyricsListResponse.md)
+
+**API Response Format:**
+The actual API returns:
+```json
+{
+  "type": "success",
+  "data": [
+    {
+      "id": "...",
+      "videoId": "...",
+      "songTitle": "...",
+      "artistName": "...",
+      "plainLyric": "...",
+      "syncedLyrics": "...",
+      ...
+    }
+  ],
+  "success": true
+}
+```
+
+The client deserializes this into a `LyricsListResponse` with `Data` (array) and `Success` (boolean) properties.
 
 ### Authorization
 

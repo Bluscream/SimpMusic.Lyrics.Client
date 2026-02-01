@@ -15,6 +15,8 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Newtonsoft.Json;
 using RestSharp;
@@ -50,8 +52,13 @@ namespace SimpMusic.Lyrics.Client
         /// </summary>
         public ApiClient()
         {
-            Configuration = SimpMusic.Lyrics.Client.Client.Configuration.Default;
-            RestClient = new RestClient("https://api-lyrics.simpmusic.org");
+            Configuration = SimpMusic.Lyrics.Client.Configuration.Default;
+            var options = new RestClientOptions("https://api-lyrics.simpmusic.org")
+            {
+                // Configure SSL/TLS settings - accept all certificates for now
+                RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true
+            };
+            RestClient = new RestClient(options);
         }
 
         /// <summary>
@@ -61,9 +68,14 @@ namespace SimpMusic.Lyrics.Client
         /// <param name="config">An instance of Configuration.</param>
         public ApiClient(Configuration config)
         {
-            Configuration = config ?? SimpMusic.Lyrics.Client.Client.Configuration.Default;
+            Configuration = config ?? SimpMusic.Lyrics.Client.Configuration.Default;
 
-            RestClient = new RestClient(Configuration.BasePath);
+            var options = new RestClientOptions(Configuration.BasePath)
+            {
+                // Configure SSL/TLS settings
+                RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true
+            };
+            RestClient = new RestClient(options);
         }
 
         /// <summary>
@@ -76,7 +88,12 @@ namespace SimpMusic.Lyrics.Client
            if (String.IsNullOrEmpty(basePath))
                 throw new ArgumentException("basePath cannot be empty");
 
-            RestClient = new RestClient(basePath);
+            var options = new RestClientOptions(basePath)
+            {
+                // Configure SSL/TLS settings
+                RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true
+            };
+            RestClient = new RestClient(options);
             Configuration = Client.Configuration.Default;
         }
 

@@ -1,4 +1,4 @@
-# IO.Swagger.Model.SuccessResponse
+# SimpMusic.Lyrics.Client.Model.SuccessResponse
 ## Properties
 
 Name | Type | Description | Notes

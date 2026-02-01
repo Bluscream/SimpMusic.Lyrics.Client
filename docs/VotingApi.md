@@ -1,4 +1,4 @@
-# IO.Swagger.Api.VotingApi
+# SimpMusic.Lyrics.Client.Api.VotingApi
 
 All URIs are relative to *https://api-lyrics.simpmusic.org*
 
@@ -19,9 +19,9 @@ Submits a vote for a lyric entry. Requires HMAC authentication.
 ```csharp
 using System;
 using System.Diagnostics;
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
+using SimpMusic.Lyrics.Client.Api;
+using SimpMusic.Lyrics.Client.Client;
+using SimpMusic.Lyrics.Client.Model;
 
 namespace Example
 {
@@ -84,9 +84,9 @@ Submits a vote for a translated lyric entry. Requires HMAC authentication.
 ```csharp
 using System;
 using System.Diagnostics;
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
+using SimpMusic.Lyrics.Client.Api;
+using SimpMusic.Lyrics.Client.Client;
+using SimpMusic.Lyrics.Client.Model;
 
 namespace Example
 {

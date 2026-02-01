@@ -294,7 +294,7 @@ namespace SimpMusic.Lyrics.Client.Api
             }
 
             return new ApiResponse<SuccessResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
                 (SuccessResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(SuccessResponse)));
         }
 
@@ -373,7 +373,7 @@ namespace SimpMusic.Lyrics.Client.Api
             }
 
             return new ApiResponse<SuccessResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
                 (SuccessResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(SuccessResponse)));
         }
 
@@ -451,7 +451,7 @@ namespace SimpMusic.Lyrics.Client.Api
             }
 
             return new ApiResponse<SuccessResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
                 (SuccessResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(SuccessResponse)));
         }
 
@@ -530,7 +530,7 @@ namespace SimpMusic.Lyrics.Client.Api
             }
 
             return new ApiResponse<SuccessResponse>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                localVarResponse.Headers.GroupBy(x => x.Name).ToDictionary(g => g.Key, g => string.Join(",", g.SelectMany(x => x.Value))),
                 (SuccessResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(SuccessResponse)));
         }
 

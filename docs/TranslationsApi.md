@@ -1,6 +1,8 @@
-# IO.Swagger.Api.TranslationsApi
+# SimpMusic.Lyrics.Client.Api.TranslationsApi
 
 All URIs are relative to *https://api-lyrics.simpmusic.org*
+
+**Note:** All translation endpoints return responses in a wrapper format with a `data` array containing translations.
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -127,6 +129,26 @@ Name | Type | Description  | Notes
 
 [**TranslatedLyricsListResponse**](TranslatedLyricsListResponse.md)
 
+**API Response Format:**
+The actual API returns:
+```json
+{
+  "type": "success",
+  "data": [
+    {
+      "id": "...",
+      "videoId": "...",
+      "translatedLyric": "...",
+      "language": "...",
+      ...
+    }
+  ],
+  "success": true
+}
+```
+
+The client deserializes this into a `TranslatedLyricsListResponse` with `Data` (array) and `Success` (boolean) properties.
+
 ### Authorization
 
 No authorization required
@@ -188,6 +210,26 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**TranslatedLyricsListResponse**](TranslatedLyricsListResponse.md)
+
+**API Response Format:**
+The actual API returns:
+```json
+{
+  "type": "success",
+  "data": [
+    {
+      "id": "...",
+      "videoId": "...",
+      "translatedLyric": "...",
+      "language": "...",
+      ...
+    }
+  ],
+  "success": true
+}
+```
+
+The client deserializes this into a `TranslatedLyricsListResponse` with `Data` (array) and `Success` (boolean) properties.
 
 ### Authorization
 

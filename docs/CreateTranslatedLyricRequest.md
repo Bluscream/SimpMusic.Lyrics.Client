@@ -1,4 +1,4 @@
-# IO.Swagger.Model.CreateTranslatedLyricRequest
+# SimpMusic.Lyrics.Client.Model.CreateTranslatedLyricRequest
 ## Properties
 
 Name | Type | Description | Notes

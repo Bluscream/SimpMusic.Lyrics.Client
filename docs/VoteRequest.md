@@ -1,4 +1,4 @@
-# IO.Swagger.Model.VoteRequest
+# SimpMusic.Lyrics.Client.Model.VoteRequest
 ## Properties
 
 Name | Type | Description | Notes
