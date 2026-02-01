@@ -14,13 +14,13 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
-using IO.Swagger.Api;
-using IO.Swagger.Model;
-using IO.Swagger.Client;
+using SimpMusic.Lyrics.Client.Api;
+using SimpMusic.Lyrics.Client.Model;
+using SimpMusic.Lyrics.Client.Client;
 using System.Reflection;
 using Newtonsoft.Json;
 
-namespace IO.Swagger.Test
+namespace SimpMusic.Lyrics.Tests.Test
 {
     /// <summary>
     ///  Class for testing ErrorResponseError
