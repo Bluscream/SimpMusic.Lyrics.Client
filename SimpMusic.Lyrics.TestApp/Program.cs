@@ -22,9 +22,11 @@ class Program
             // Test Translations API
             await TestTranslationsApi();
 
-            // Test Voting API (requires HMAC auth, so we'll just test the structure)
-            Console.WriteLine("Voting API tests skipped (requires HMAC authentication)");
-            Console.WriteLine();
+            // Test Voting API (requires HMAC auth)
+            await TestVotingApi();
+
+            // Test Create endpoints (requires HMAC auth)
+            await TestCreateEndpoints();
 
             Console.WriteLine("All tests completed!");
         }
@@ -217,6 +219,164 @@ class Program
         catch (SimpMusic.Lyrics.Client.ApiException apiEx) when (apiEx.ErrorCode == 404 || apiEx.ErrorCode == 500)
         {
             Console.WriteLine($"   ✗ No translations found ({apiEx.ErrorCode}) - this is normal if no translations exist");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"   ✗ Error: {ex.GetType().Name}: {ex.Message}");
+        }
+
+        Console.WriteLine();
+    }
+
+    static async Task TestVotingApi()
+    {
+        Console.WriteLine("Testing Voting API...");
+        Console.WriteLine("---------------------");
+
+        var votingApi = new VotingApi();
+
+        // Test VoteForLyric
+        try
+        {
+            Console.WriteLine("1. Testing VoteForLyric with lyric ID: 6882d066000aeeecd72f");
+            var voteRequest = new VoteRequest("6882d066000aeeecd72f");
+            var voteResult = await votingApi.VoteForLyricAsync(voteRequest);
+            
+            if (voteResult != null)
+            {
+                Console.WriteLine($"   ✓ Success! Vote submitted: {voteResult.Success}");
+            }
+            else
+            {
+                Console.WriteLine("   ✗ No response received");
+            }
+        }
+        catch (SimpMusic.Lyrics.Client.ApiException apiEx) when (apiEx.ErrorCode == 401 || apiEx.ErrorCode == 403)
+        {
+            Console.WriteLine($"   ✗ Authentication required ({apiEx.ErrorCode}) - Expected without HMAC auth");
+        }
+        catch (SimpMusic.Lyrics.Client.ApiException apiEx)
+        {
+            Console.WriteLine($"   ✗ API Error ({apiEx.ErrorCode}): {apiEx.Message}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"   ✗ Error: {ex.GetType().Name}: {ex.Message}");
+        }
+
+        // Test VoteForTranslatedLyric
+        try
+        {
+            Console.WriteLine("2. Testing VoteForTranslatedLyric with translated lyric ID: test-id");
+            var voteRequest = new VoteRequest("test-id");
+            var voteResult = await votingApi.VoteForTranslatedLyricAsync(voteRequest);
+            
+            if (voteResult != null)
+            {
+                Console.WriteLine($"   ✓ Success! Vote submitted: {voteResult.Success}");
+            }
+            else
+            {
+                Console.WriteLine("   ✗ No response received");
+            }
+        }
+        catch (SimpMusic.Lyrics.Client.ApiException apiEx) when (apiEx.ErrorCode == 401 || apiEx.ErrorCode == 403)
+        {
+            Console.WriteLine($"   ✗ Authentication required ({apiEx.ErrorCode}) - Expected without HMAC auth");
+        }
+        catch (SimpMusic.Lyrics.Client.ApiException apiEx)
+        {
+            Console.WriteLine($"   ✗ API Error ({apiEx.ErrorCode}): {apiEx.Message}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"   ✗ Error: {ex.GetType().Name}: {ex.Message}");
+        }
+
+        Console.WriteLine();
+    }
+
+    static async Task TestCreateEndpoints()
+    {
+        Console.WriteLine("Testing Create Endpoints...");
+        Console.WriteLine("----------------------------");
+
+        var lyricsApi = new LyricsApi();
+        var translationsApi = new TranslationsApi();
+
+        // Test CreateLyric
+        try
+        {
+            Console.WriteLine("1. Testing CreateLyric");
+            var createRequest = new CreateLyricRequest(
+                videoId: "TEST123",
+                songTitle: "Test Song",
+                artistName: "Test Artist",
+                albumName: "Test Album",
+                durationSeconds: 180,
+                plainLyric: "Test lyrics\nLine 2\nLine 3",
+                syncedLyrics: "[00:00.00]Test lyrics\n[00:05.00]Line 2\n[00:10.00]Line 3",
+                richSyncLyrics: null,
+                vote: 0,
+                contributor: "TestApp",
+                contributorEmail: "test@example.com"
+            );
+            
+            var createResult = await lyricsApi.CreateLyricAsync(createRequest);
+            
+            if (createResult != null && createResult.Data != null)
+            {
+                Console.WriteLine($"   ✓ Success! Created lyric with ID: {createResult.Data.Id ?? "(null)"}");
+            }
+            else
+            {
+                Console.WriteLine("   ✗ No response received");
+            }
+        }
+        catch (SimpMusic.Lyrics.Client.ApiException apiEx) when (apiEx.ErrorCode == 401 || apiEx.ErrorCode == 403)
+        {
+            Console.WriteLine($"   ✗ Authentication required ({apiEx.ErrorCode}) - Expected without HMAC auth");
+        }
+        catch (SimpMusic.Lyrics.Client.ApiException apiEx)
+        {
+            Console.WriteLine($"   ✗ API Error ({apiEx.ErrorCode}): {apiEx.Message}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"   ✗ Error: {ex.GetType().Name}: {ex.Message}");
+        }
+
+        // Test CreateTranslatedLyric
+        try
+        {
+            Console.WriteLine("2. Testing CreateTranslatedLyric");
+            var createTranslatedRequest = new CreateTranslatedLyricRequest(
+                videoId: "TEST123",
+                translatedLyric: "Test translated lyrics\nLine 2\nLine 3",
+                language: "es",
+                vote: 0,
+                contributor: "TestApp",
+                contributorEmail: "test@example.com"
+            );
+            
+            var createTranslatedResult = await translationsApi.CreateTranslatedLyricAsync(createTranslatedRequest);
+            
+            if (createTranslatedResult != null && createTranslatedResult.Data != null)
+            {
+                Console.WriteLine($"   ✓ Success! Created translation with ID: {createTranslatedResult.Data.Id ?? "(null)"}");
+            }
+            else
+            {
+                Console.WriteLine("   ✗ No response received");
+            }
+        }
+        catch (SimpMusic.Lyrics.Client.ApiException apiEx) when (apiEx.ErrorCode == 401 || apiEx.ErrorCode == 403)
+        {
+            Console.WriteLine($"   ✗ Authentication required ({apiEx.ErrorCode}) - Expected without HMAC auth");
+        }
+        catch (SimpMusic.Lyrics.Client.ApiException apiEx)
+        {
+            Console.WriteLine($"   ✗ API Error ({apiEx.ErrorCode}): {apiEx.Message}");
         }
         catch (Exception ex)
         {
