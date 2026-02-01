@@ -50,7 +50,7 @@ namespace SimpMusic.Lyrics.Client
         /// </summary>
         public ApiClient()
         {
-            Configuration = SimpMusic.Lyrics.Client.Configuration.Default;
+            Configuration = SimpMusic.Lyrics.Client.Client.Configuration.Default;
             RestClient = new RestClient("https://api-lyrics.simpmusic.org");
         }
 
@@ -61,7 +61,7 @@ namespace SimpMusic.Lyrics.Client
         /// <param name="config">An instance of Configuration.</param>
         public ApiClient(Configuration config)
         {
-            Configuration = config ?? SimpMusic.Lyrics.Client.Configuration.Default;
+            Configuration = config ?? SimpMusic.Lyrics.Client.Client.Configuration.Default;
 
             RestClient = new RestClient(Configuration.BasePath);
         }
