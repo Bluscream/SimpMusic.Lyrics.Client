@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <AssemblyName>SimpMusic.Lyrics.Client</AssemblyName>
+    <RootNamespace>SimpMusic.Lyrics.Client</RootNamespace>
+    <OutputType>Library</OutputType>
+    <Version>1.0.0</Version>
+    <Authors>Bluscream</Authors>
+    <Company>SimpMusic</Company>
+    <Product>SimpMusic Lyrics API Client</Product>
+    <Description>A .NET client library for the SimpMusic Lyrics API. Provides easy access to lyrics and translations for songs.</Description>
+    <Copyright>Copyright © 2026</Copyright>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Bluscream/SimpMusic.Lyrics.Client</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Bluscream/SimpMusic.Lyrics.Client</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>lyrics;simpmusic;api;client;music</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RestSharp" Version="111.4.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="JsonSubTypes" Version="1.2.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+  </ItemGroup>
+
+</Project>
