@@ -20,7 +20,7 @@ using SimpMusic.Lyrics.Client.Client;
 using SimpMusic.Lyrics.Client.Api;
 using SimpMusic.Lyrics.Client.Model;
 
-namespace SimpMusic.Lyrics.Tests.Test
+namespace SimpMusic.Lyrics.Tests
 {
     /// <summary>
     ///  Class for testing SearchApi

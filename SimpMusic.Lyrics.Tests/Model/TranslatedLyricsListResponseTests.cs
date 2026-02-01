@@ -20,7 +20,7 @@ using SimpMusic.Lyrics.Client.Client;
 using System.Reflection;
 using Newtonsoft.Json;
 
-namespace SimpMusic.Lyrics.Tests.Test
+namespace SimpMusic.Lyrics.Tests
 {
     /// <summary>
     ///  Class for testing TranslatedLyricsListResponse
